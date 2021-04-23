@@ -1,0 +1,11 @@
+*
+!*/
+!.*
+!*.md
+!*.bst
+!*.sty
+!*.tex
+!*.bib
+!figures/*.pdf
+!feedback/*/*.pdf
+!*/fig/*.*

@@ -1,0 +1,75 @@
+\documentclass[a4paper,12pt]{report}
+
+\include{imports}
+
+% Words to not be capitalised by \capitalisewords
+\MFUnocap{of} 
+\MFUnocap{using}
+\MFUnocap{vs.}
+\MFUnocap{for}
+\MFUnocap{and}
+\MFUnocap{the}
+% Words to not be capitalised by \titlecap
+\Addlcwords{of using vs. for and the}
+
+% Editing
+\definecolor{hermancolor}{HTML}{008000}
+\definecolor{leannecolor}{HTML}{6699CC}
+\newcommand{\herman}[1]{\textcolor{mycolor}{#1}}
+\newcommand{\leanne}[1]{\textcolor{leannecolor}{#1}}
+\newcommand{\hktodo}[1]{\todo[color=hermancolor]{Herman: #1}}
+\newcommand{\lntodo}[1]{\todo[color=leannecolor]{Leanne: #1}}
+
+% Name 
+\newcommand{\ThesisTitle}{Some thesis title}
+\newcommand{\Author}{Name Surname}
+\newcommand{\Studentnumber}{12345678}
+\newcommand{\Supervisor}{Dr Name Surname}
+\newcommand{\Department}{Department of Electrical and Electronic Engineering}
+\newcommand{\Date}{September 2020}
+\newcommand{\SignedDate}{4 September 2020}
+
+\begin{document}
+
+% Front matter
+\input{frontmatter/title_page}
+%\afterpage{\blankpage}
+\pagenumbering{roman}
+\input{frontmatter/acknowledgements}
+\input{frontmatter/declaration}
+\input{frontmatter/abstract}
+\acuseall
+\clearpage
+\renewcommand{\contentsname}{Table of Contents}
+\addcontentsline{toc}{chapter}{Table of contents}
+\tableofcontents
+%\renewcommand{\listfigurename}{\listfigurename}
+\newpage
+\addcontentsline{toc}{chapter}{List of figures}
+\listoffigures
+\addcontentsline{toc}{chapter}{List of tables}
+\listoftables
+\clearpage
+
+\input{frontmatter/nomenclature}
+\pagenumbering{arabic}
+\acresetall
+
+% Contents
+\input{introduction/introduction}
+\input{background/background}
+\acresetall
+\input{conclusion/conclusion}
+
+% Bibliography
+\chapter*{References}\markboth{}{\scshape References}
+\addcontentsline{toc}{chapter}{References}
+\renewcommand{\bibsection}{}
+\bibliography{mybib}
+
+% End matter
+\appendix
+\input{appendices/appendices}
+
+\end{document}
+

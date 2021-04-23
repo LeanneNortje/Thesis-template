@@ -1,0 +1,107 @@
+\graphicspath{{figures/}}
+
+\mysection{Unimodal few-shot learning}{Unimodal Few-Shot Learning}
+\label{sec:unimodal_few-shot_learning}
+
+Some text. 
+\mydefinition{An apple}{is a type of fruit.} 
+Some more text.
+Then a figure which will be placed either at the top or bottom of a page.
+
+\begin{figure*}[tb]
+	
+	\begin{minipage}[htb!]{1.0\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{buckeye_cropped.pdf}
+		%		\vspace*{-6pt}
+	\end{minipage}
+	\caption{Isolating the words in the conversational spoken sequences of the Buckeye corpus.}
+	\label{fig:buckeye}
+	
+	%	\vspace*{-5pt}
+\end{figure*}
+
+\subsection[Siamese neural networks]{Siamese Neural Networks}
+\label{sec:siamese}
+
+Check the tex file on how to define a nomenclature item like $\boldsymbol{\mathrm{z}}^{(i)}$ \nomenclature[v]{$\boldsymbol{\mathrm{z}}^{(i)}$}{A feature representation.} or $\boldsymbol{\mathrm{x}}_{\textrm{pair}}$\nomenclature[v]{$\boldsymbol{\mathrm{x}}_{\textrm{pair}}$}{A pair of $\boldsymbol{\mathrm{x}}$.}.
+You can define the nomenclature variables when you first define it. Use ``v'' for variables, ``f'' for functions and ``c'' for constants.
+
+Then you can do some math like a triplet loss: 
+\begin{equation}
+\begin{split}
+l_{\textrm{triplet}}(\boldsymbol{\mathrm{x}}, \boldsymbol{\mathrm{x}}_{\textrm{pair}}, \boldsymbol{\mathrm{x}}_{\textrm{neg}}) & = \mathrm{max}\{0, m+d(\boldsymbol{\mathrm{x}}, \boldsymbol{\mathrm{x}}_{\textrm{pair}})-d(\boldsymbol{\mathrm{x}}, \boldsymbol{\mathrm{x}}_{\textrm{neg}})\},
+\end{split}	
+\end{equation} 
+where 
+\begin{equation}
+\begin{split}
+d(\boldsymbol{\mathrm{x}}_{1}, \boldsymbol{\mathrm{x}}_{2}) & = \begin{Vmatrix}\boldsymbol{\mathrm{z}}_{1} - \boldsymbol{\mathrm{z}}_{2}\end{Vmatrix}_2^2 \\
+& = \begin{Vmatrix}f_{\boldsymbol{\Theta}}(\boldsymbol{\mathrm{x}}_{1}) - f_{\boldsymbol{\Theta}}(\boldsymbol{\mathrm{x}}_{2})\end{Vmatrix}_2^2
+\end{split}	
+\end{equation} is the squared Euclidean distance between the embeddings $\mathbf{z}_1$ and $\mathbf{z}_2$ corresponding to $\mathbf{x}_1$ and $\mathbf{x}_2$ and $m$ is some margin parameter~\cite{wang_learning_2014,hermann_multilingual_2014}.
+
+\section{Using the acro package}
+\label{sec:acro}
+
+Define the acronyms in the \verb+fronmatter/define_acronyms.tex+ file. 
+
+\begin{table}[!h]
+	\renewcommand{\arraystretch}{1.1}
+	\centering
+	\caption{This table shows the different possible commands to use with acronyms.}
+	\begin{tabularx}{\linewidth}{@{}llll@{}}
+		\toprule
+		& \multicolumn{3}{C}{Output of acro commands for acronyms when the acronyms are used for the first time. The actual acronym form is given by the ``long'' form specified in \verb+\DeclareAcronym+.} \\
+		\cmidrule(lr){2-4}
+		Command    & \acl{CAE} & \acl{MTriplet}\\
+		\midrule 
+		\acresetall
+		\verb+\ac+ & \ac{CAE} & \ac{MTriplet}\\
+		\acresetall
+		\verb+\Ac+ & \Ac{CAE} & \Ac{MTriplet}\\
+		\acresetall
+		\verb+\acl+ & \acl{CAE} & \acl{MTriplet}\\
+		\acresetall
+		\verb+\Acl+ & \Acl{CAE} & \Acl{MTriplet}\\
+		\acresetall
+		\verb+\acf+ & \acf{CAE} & \acf{MTriplet}\\
+		\acresetall
+		\verb+\Acf+ & \Acf{CAE} & \Acf{MTriplet}\\
+		\acresetall
+		\verb+\acp+   & \acp{CAE} & \acp{MTriplet}\\
+		\acresetall
+		\verb+\Acp+ & \Acp{CAE} & \Acp{MTriplet}\\
+		\acresetall
+		\verb+\acfp+ & \acfp{CAE} & \acfp{MTriplet}\\
+		\acresetall
+		\verb+\Acfp+ & \Acfp{CAE} & \Acfp{MTriplet}\\
+		\acresetall
+		\verb+\aca+ & \aca{CAE} & \aca{MTriplet}\\
+		\bottomrule
+	\end{tabularx}
+	\label{tbl:acro_first_time_examples}
+\end{table}
+\newpage
+\begin{table}[!h]
+	\renewcommand{\arraystretch}{1.1}
+	\centering
+	\caption{This table shows the different possible commands to use with acronyms.}
+	\begin{tabularx}{\linewidth}{@{}llll@{}}
+		\toprule
+		& \multicolumn{3}{C}{The output of acro commands for each subsequent use (after the first use).} \\
+		\cmidrule(lr){2-4}
+		Commands    & \acl{AE} & \acl{MTriplet}\\
+		\midrule 
+		\verb+\ac+ & \ac{CAE} & \ac{MTriplet}\\
+		\verb+\Ac+ & \Ac{CAE} & \Ac{MTriplet}\\
+		\verb+\acf+ & \acf{CAE} & \acf{MTriplet}\\
+		\verb+\Acf+ & \Acf{CAE} & \Acf{MTriplet}\\
+		\verb+\acp+   & \acp{CAE} & \acp{MTriplet}\\
+		\verb+\Acp+ & \Acp{CAE} & \Acp{MTriplet}\\
+		\verb+\acfp+ & \acfp{CAE} & \acfp{MTriplet}\\
+		\verb+\Acfp+ & \Acfp{CAE} & \Acfp{MTriplet}\\
+		\bottomrule
+	\end{tabularx}
+	\label{tbl:acro_subsequent_time_examples}
+\end{table}
