@@ -1,0 +1,68 @@
+% stb-thesis.eng
+%
+%          Stellenbosch University Thesis bundle
+%              English language definitions
+% -------------------------------------------------------------------        
+% 
+% This file may be  customized to suit specific
+% user requirements.
+% 
+% Original by Danie Els <dnjels@sun.ac.za>
+% -------------------------------------------------------------------        
+%
+%  Command that are set externally in main file:
+%      \ThesisType
+%      \DegreeName
+%      \DegreeNameLong
+%      \FacultyName
+
+\ProvidesFile{stb_thesis_afr}[2023/01/10  
+                             v1.0 
+                             stb_thesis Eng defs (DNJ Els)]
+                             
+\newcommand{\STBextrasenglish}{%
+    \def\STBName           {Stellenbosch University}%
+    \def\AuthByTxt         {by}%
+    \def\StudyLeaderType   {Study leader:}%
+    \def\StudyLeadersType  {Study leaders:}%
+    \def\CoStudyLeaderType {Co-study leader:}%
+    \def\CoStudyLeadersType{Co-study leaders:}%
+    \def\SupervisorType    {Supervisor:}%
+    \def\SupervisorsType   {Supervisors:}%
+    \def\CoSupervisorType  {Co-supervisor:}%
+    \def\CoSupervisorsType {Co-supervisors:}%
+    \def\TypeAssignment    {Research assignment}%
+    \def\TypeThesis        {Thesis}%
+    \def\TypePhD           {Dissertation}%
+    \def\CopyrightHolder   {\STBName}%
+    \def\CopyrightTxt      {Copyright}%
+    \def\CopyrightAnot     {All rights reserved.}%
+    \def\Signat            {Signature}%
+    \def\Datetxt           {Date}%
+    \def\MasterDescript    {%
+         \ThesisType\ presented in partial fulfilment of the requirements for the 
+          degree of \DegreeNameLong\ in the \FacultyName\ at \STBName{}}%
+    \def\PhDDescript     {%
+         \ThesisType\ presented for the degree of \DegreeNameLong\ in the \FacultyName\ 
+         at \STBName{}}%
+    \def\ThesisDeclare   {%
+By submitting this \MakeLowercase{\ThesisType}\ electronically, I declare that
+the entirety of the work contained therein is my own, original work, 
+that I am the sole author thereof (save to the extent explicitly otherwise stated), 
+that reproduction and publication thereof by \STBName\ will not infringe any
+third party rights and that I have not previously in its entirety or in part
+submitted it for obtaining any qualification.}%
+    \def\MonthName##1{%
+           \ifcase##1\or January\or February\or March\or April\or May\or June\or 
+           July\or August\or September\or October\or November\or December\fi}%      
+}
+
+
+\newcommand{\STBcaptionsenglish}{%
+    \def\DeclarationName{Declaration}%
+    \def\AbstractName   {Abstract}%
+}
+
+\endinput
+%%
+%% End of file `stb-thesis.eng'.
