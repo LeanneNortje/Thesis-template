@@ -1,0 +1,209 @@
+%%
+%% This is file `stb-titlepage.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% stb-titlepage.dtx  (with options: `pkg')
+%% 
+%% Copyright (C) 2023 Stellenbosch University
+%% All rights reserved.
+%% 
+%% ----------------------------------------------------------------------
+%% Stellenbosch University Title Page Package
+%% ----------------------------------------------------------------------
+%% 
+%% Author:     Danie Els
+%% Maintained: Danie Els (dnjels@sun.ac.za)
+%% 
+%% This work may be distributed and modified, and must be credited
+%% under the conditions of the latest version of the Creative Commons
+%% License (CC BY 4.0). The latest version of this license is in:
+%% 
+%%    https://creativecommons.org/licenses/by/4.0/
+%% 
+%% This work consists of the files
+%%   stb-titlepage.ins
+%%   stb-titlepage.dtx
+%% and the derived files
+%%   stb-titlepage.sty
+%% -------------------------------------------------------------------
+%% 
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{stb-titlepage}[2023/07/22
+                                v1.1
+                                Stellenbosch Title Page Package (DNJ ELS)]
+\RequirePackage{etoolbox}
+\RequirePackage{ifthen}
+\RequirePackage{kvoptions}
+\RequirePackage{geometry}
+\AtEndPreamble{\RequirePackage{eso-pic}}
+\AtBeginDocument{%
+    \@ifpackageloaded{graphicx}{}{%
+        \PackageError{stb-titlepage}{You must load the graphicx package}{}}}
+\SetupKeyvalOptions{
+    family=STB,
+    prefix=STB@}
+\DeclareBoolOption{titlepage}
+\DeclareComplementaryOption{notitlepage}{titlepage}
+\DeclareStringOption[0.4]{scale}
+\DeclareStringOption[0cm]{vshift}
+\DeclareStringOption[stb-logo-vert]{logo}
+\DeclareStringOption[std]{typeblock}
+\ProcessKeyvalOptions*
+\let\@address\relax
+\newcommand\address[1]{\def\@address{#1}}
+\newlength{\STB@xpos}
+\newlength{\STB@ypos}
+\newsavebox{\STB@logobox}
+\newcommand{\STB@setlogo}{%
+    \ifthenelse{\equal{\STB@logo}{none}}{}{%
+         \savebox{\STB@logobox}{\includegraphics[scale=\STB@scale]{\STB@logo}}}%
+     \setlength{\STB@xpos}{\dimexpr .5\paperwidth - .5\wd\STB@logobox}%
+     \setlength{\STB@ypos}{\dimexpr -\ht\STB@logobox - \STB@vshift}}
+\AtBeginDocument{\STB@setlogo}
+\newcommand{\STB@putlogo}{%
+        \AddToShipoutPictureBG*{\AtStockUpperLeft{%
+                 \put(\STB@xpos,\STB@ypos){\usebox{\STB@logobox}}}}}
+\newif\ifSTB@cpyr
+\newcommand\STB@cpyrName{}
+\newcommand\STB@cpyrDate{}
+\newcommand\Copyright[2]{%
+    \STB@cpyrtrue
+    \ifstrempty{#1}%
+        {\renewcommand\STB@cpyrDate{\the\year}}{\renewcommand\STB@cpyrDate{#1}}%
+    \renewcommand\STB@cpyrName{#2}}
+\newcommand\STB@cpyrText{Copyright \textcopyright\ \STB@cpyrDate\ \STB@cpyrName}
+\if@titlepage
+    \renewcommand\maketitle{%
+    \begin{titlepage}%
+       % \let\footnotesize\small
+        \let\footnoterule\relax
+        \let \footnote \thanks
+        \STB@putlogo
+        \null\vfil
+        \vskip 30mm
+        \begin{center}%
+             \ifSTB@cpyr
+                \insert\footins{\centering\footnotesize\STB@cpyrText}%
+             \fi
+            {\LARGE \@title \par}%
+            \vskip 3em%
+            {\large
+            \lineskip .75em%
+            \begin{tabular}[t]{c}%
+                \@author
+            \end{tabular}\par}%
+            \vfill
+            {\large \@date \par}%
+            \vskip 1.5em%
+            \ifx\@address\relax\else
+                \vskip 1.5em%
+                {\normalsize\@address\par}
+            \fi
+            \vskip 2em%
+        \end{center}\par
+        \@thanks
+        \vfil\null
+    \end{titlepage}%
+    \setcounter{footnote}{0}%
+    \global\let\thanks\relax
+    \global\let\maketitle\relax
+    \global\let\@thanks\@empty
+    \global\let\@author\@empty
+    \global\let\@date\@empty
+    \global\let\@title\@empty
+    \global\let\title\relax
+    \global\let\author\relax
+    \global\let\date\relax
+    \global\let\and\relax}
+\else
+    \renewcommand\maketitle{\par
+    \begingroup
+        \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
+        \def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
+        \long\def\@makefntext##1{\parindent 1em\noindent
+            \hb@xt@1.8em{%
+            \hss\@textsuperscript{\normalfont\@thefnmark}}##1}%
+        \if@twocolumn
+            \ifnum \col@number=\@ne
+                \@maketitle
+            \else
+                \twocolumn[\@maketitle]%
+            \fi
+        \else
+            \newpage
+            \global\@topnum\z@   % Prevents figures from going at top of page.
+            \@maketitle
+        \fi
+        \thispagestyle{plain}\@thanks
+    \endgroup
+    \STB@putlogo
+    \setcounter{footnote}{0}%
+    \global\let\thanks\relax
+    \global\let\maketitle\relax
+    \global\let\@maketitle\relax
+    \global\let\@thanks\@empty
+    \global\let\@author\@empty
+    \global\let\@date\@empty
+    \global\let\@title\@empty
+    \global\let\title\relax
+    \global\let\author\relax
+    \global\let\date\relax
+    \global\let\and\relax}
+    \def\@maketitle{%
+        \newpage
+        \null
+        \vskip 30mm%
+        \begin{center}%
+            \let \footnote \thanks
+            {\LARGE \@title \par}%
+            \vskip 1.5em%
+            {\large
+            \lineskip .5em%
+            \begin{tabular}[t]{c}%
+                \@author
+            \end{tabular}\par}%
+            \vskip 1.5em%
+            {\large \@date}%
+            \ifx\@address\relax\else
+                 \vskip 1em%
+                {\normalsize\@address\par}
+            \fi
+        \end{center}%
+        \par
+        \vskip 1.5em
+        \ifSTB@cpyr
+            \insert\footins{\noindent\footnotesize\STB@cpyrText\medskip}%
+        \fi}
+\fi
+\newcommand\STB@typeblock@eval{%
+    \ifthenelse{\equal{\STB@typeblock}{golden}}{\@nameuse{STB@typeblock@golden}}{%
+    \ifthenelse{\equal{\STB@typeblock}{a5}}    {\@nameuse{STB@typeblock@a5}}    {%
+    \ifthenelse{\equal{\STB@typeblock}{wide}}  {\@nameuse{STB@typeblock@wide}}  {%
+    \ifthenelse{\equal{\STB@typeblock}{std}}   {\@nameuse{STB@typeblock@std}}   {%
+        \PackageWarning{ustitle}{logo='\STB@typeblock' is invalid, default to 'std'}%
+        \@nameuse{STB@typeblock@std}%
+    }}}}}
+\@namedef{STB@typeblock@golden}{%----- Golden type block  -----------------
+    \geometry{text={0.6667\paperwidth, 1.0787\paperwidth}}
+    \geometry{hmarginratio=1:1}
+    \geometry{vmarginratio=2:3}
+    \geometry{marginparwidth=50pt}
+    \PackageInfo{stb-titlepage}{Golden ratio type block}}
+\@namedef{STB@typeblock@a5}{%--------- A5 type block ----------------------
+    \geometry{text={0.5\paperheight, \paperwidth}}
+    \geometry{hmarginratio=1:1   }
+    \geometry{vmarginratio=2:3   }
+    \geometry{marginparwidth=50pt}
+    \PackageInfo{stb-titlepage}{A5 type block}}
+\@namedef{STB@typeblock@wide}{%-------- Wide type block --------------------
+    \geometry{margin=25mm        }
+    \geometry{marginparwidth=50pt}
+    \PackageInfo{stb-titlepage}{Wide type block}}
+\@namedef{STB@typeblock@std}{%--------- Latex default type block -----------
+    \PackageInfo{stb-titlepage}{Latex default type block}}
+\STB@typeblock@eval
+\endinput
+%%
+%% End of file `stb-titlepage.sty'.

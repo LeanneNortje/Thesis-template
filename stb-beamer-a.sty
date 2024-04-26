@@ -1,0 +1,134 @@
+%%
+%% This is file `stb-beamer-a.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% stb-beamer.dtx  (with options: `beamer-a')
+%% 
+%% Copyright (C) 2023 Stellenbosch University
+%% All rights reserved.
+%% 
+%% ----------------------------------------------------------------------
+%%  Stellenbosch University beamer presentation styles
+%% ----------------------------------------------------------------------
+%% 
+%% Author:     Danie Els
+%% Maintained: Danie Els (dnjels@sun.ac.za)
+%% 
+%% This work may be distributed and modified, and must be credited
+%% under the conditions of the latest version of the Creative Commons
+%% License (CC BY 4.0). The latest version of this license is in:
+%% 
+%%    https://creativecommons.org/licenses/by/4.0/
+%% 
+%% This work consists of the files
+%%   stb-beamer.ins
+%%   stb-beamer.dtx
+%% and the derived files
+%%   stb-beamer-a.sty
+%%   stb-beamer-b.sty
+%% -------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{stb-beamer-a}
+                [2023/08/10 v1.0 Stellenbosch Beamer (DNJ ELS)]
+\definecolor{stbMaroon}{RGB}{97,  34, 59}
+\definecolor{stbGold}  {RGB}{183,153, 98}
+\definecolor{stbGreen} {RGB}{130,204,174}
+\definecolor{stbOrange}{RGB}{220, 68,  5}
+\definecolor{stbWine}  {RGB}{166, 10, 61}
+\definecolor{stbSoil}  {RGB}{100, 51, 53}
+\usetheme[]{Marburg}
+
+\logo{\includegraphics[width=1.25cm]{stb-logo-beamer}}
+
+\useoutertheme[height=0pt,width=2cm,right]{sidebar}
+\useinnertheme[shadow]{rounded}
+\usecolortheme{rose,sidebartab}
+
+\setbeamertemplate{sidebar canvas \beamer@sidebarside}
+                  [vertical shading]
+                  [top=stbMaroon,bottom=stbMaroon!85]
+
+\setbeamertemplate{section in sidebar}{\vbox{%
+    \beamer@sidebarformat{3pt}{section in sidebar}{\insertsectionhead}}}
+\setbeamertemplate{section in sidebar shaded}{\vbox{%
+    \beamer@sidebarformat{3pt}{section in sidebar shaded}{\insertsectionhead}}}
+
+\setbeamertemplate{subsection in sidebar}{\vbox{%
+    \beamer@sidebarformat{6pt}{subsection in sidebar}{\insertsubsectionhead}}}
+\setbeamertemplate{subsection in sidebar shaded}{\vbox{%
+        \beamer@sidebarformat{6pt}{subsection in sidebar shaded}{\insertsubsectionhead}}}
+
+\usefonttheme[only large]{structurebold}
+
+\setbeamercolor{structure}{fg=stbSoil}
+\setbeamercolor{author}{parent=structure}
+\setbeamercolor{title in sidebar}{fg=stbGold}
+
+\setbeamerfont{title}{series=\normalfont,size=\Huge}
+\setbeamerfont{title in sidebar}{series=\bfseries,size=\normalsize}
+\setbeamerfont{author in sidebar}{series=\bfseries}
+\setbeamerfont*{item}{series=}
+\setbeamerfont{frametitle}{size=}
+\setbeamerfont{block title}{size=\small}
+\setbeamerfont{subtitle}{size=\Large,series=\normalfont}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{bibliography item}[book]
+
+\setbeamertemplate{sidebar right}
+    {\hspace*{0pt}%
+     \vskip2.5em%
+     \hbox to2cm{\hss\insertlogo\hss}
+    %\vskip1.25em%
+    {\usebeamerfont{title in sidebar}%
+     \vskip0.5em%
+     \hskip3pt%
+     \usebeamercolor[fg]{title in sidebar}%
+     \insertshorttitle[width=\dimexpr 2cm-6pt,center,respectlinebreaks]\par%
+     \vskip0.5em}%
+     %\hbox to2cm{\hss\insertlogo\hss}
+     %\vskip1.25em%
+      \insertverticalnavigation{2cm}%
+      \vfill
+      \hbox to 2cm{\hfill
+                   \usebeamerfont{subsection in sidebar}\strut
+                   \usebeamercolor[fg]{subsection in sidebar}%
+                   \insertframenumber{} of \inserttotalframenumber{}\hskip5pt}%
+      \vskip3pt}%
+
+\let\titlefig\relax
+\setbeamertemplate{title page}
+   {\vbox{}
+    %\vskip1em
+    {\usebeamercolor[fg]{title}\usebeamerfont{title}\inserttitle\par}%
+    \ifx\insertsubtitle\@empty%
+    \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+    \fi%
+    \vskip1em\par
+    \insertdate\par
+    \vskip0pt plus1filll
+    \mbox{}\hfill\titlefig\hfill\mbox{}\par
+    \vskip0pt plus1filll
+    \leftskip=0pt plus1fill\insertauthor\par
+    \insertinstitute\vskip1em}
+
+\setbeamerfont{frametitle}{size=\large}
+\setbeamercolor{frametitle}{bg=white,fg=stbMaroon}%{parent=block title}
+\setbeamerfont{framesubtitle}{size=\normalsize, shape=\itshape}
+
+\setbeamercolor{block title}{bg=stbMaroon!35,fg=stbMaroon}
+\setbeamercolor{block body} {bg=stbMaroon!15,fg=black}
+
+\setbeamercolor{block title alerted}{fg=white, bg=stbOrange}
+\setbeamercolor{block body alerted}{bg=stbOrange!15,fg=stbOrange}
+\setbeamercolor{alerted text}{fg=stbOrange}
+
+\setbeamercolor{block title example}{fg=white, bg=stbGreen!70!black}
+\setbeamercolor{block body example}{bg=stbGreen!25}
+\endinput
+%%
+%% End of file `stb-beamer-a.sty'.
