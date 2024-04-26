@@ -9,5 +9,6 @@
 *.nls
 *.out
 *.pdf
+!stb-thesis-frntp.pdf
 *.synctex.gz
 *.toc
