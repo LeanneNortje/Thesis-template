@@ -1,5 +1,6 @@
 % Page layout
 \usepackage[left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+%\usepackage{cite}
 \usepackage{afterpage}
 \newcommand\blankpage{%
 	\null
@@ -16,6 +17,7 @@
 \usepackage{graphicx}
 \usepackage{pdfpages}
 \setlength{\abovecaptionskip}{8pt}  % spacing above and below captions
+\usepackage{subfig}
 
 % Font and text
 \usepackage[english,afrikaans]{babel}
@@ -25,12 +27,13 @@
 \sloppy
 \onehalfspacing
 \usepackage{enumitem}
+%\setlist[enumerate]{noitemsep, topsep=0pt, partopsep=0pt}
 \usepackage{listings,xfp}
 \usepackage{anyfontsize}
 \usepackage{bold-extra}
 \usepackage{quotchap}
 
-\renewcommand\labelitemi{\tinytonormal$\gg$}
+\renewcommand\labelitemi{\tinytonormal$\divideontimes$}
 
 \makeatletter
 {\large % Capture font definitions of \small
@@ -96,7 +99,7 @@
 \titleformat{\subsection}{\rmfamily\scshape\large}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}{\rmfamily\scshape\normalsize}{\thesubsubsection}{1em}{}
 
-\newcommand{\ShortInTextTitle}[1]{\textbf{\scshape \xcapitalisewords{#1}}}
+\newcommand{\ShortInTextTitle}[1]{\textbf{\scshape #1}}
 
 % Table of contents
 \usepackage{xcolor,titletoc}
@@ -109,23 +112,108 @@
 
 % Nomenclaure
 \usepackage{acro}
+\usepackage{multicol}
+%\usepackage{scrextend}
+\usepackage{ragged2e}
 \newlength\myitemwidth
-\setlength\myitemwidth{3cm}
+\setlength\myitemwidth{5cm}
 \newlist{myacronymlist}{description}{1}
 \setlist[myacronymlist]{
+	%	itemsep = 1000pt,
 	labelindent = 0pt ,
 	labelsep    = 0pt ,
 	leftmargin  = \myitemwidth ,
 	labelwidth  = \myitemwidth ,
 	itemindent  = 0pt ,
-	format      = \normalfont \bfseries 
+	format      = \RaggedRight 
 }
-\DeclareAcroListStyle{myliststyle}{list}{
-	list = myacronymlist
+%\NewAcroTemplate[list]{styleabbrev}{%
+	%	\UseAcroTemplate[list]{description}[0]%
+	%}
+%\NewAcroTemplate[list]{styleabbrev}{%
+	%		\UseAcroTemplate[list]{myacronymlist}[0]%
+	%		\acropreamble
+	%		\begin{itemize}
+		%			\acronymsmapF
+		%			{\item[\bfseries\acrowrite{short}] \acrowrite{alt}}
+		%			{\item\AcroRerun}
+		%		\end{itemize}
+	%}
+\RenewAcroTemplate{long-short}{%
+	\acroiffirstTF{%
+		\acrowrite{long}%
+		\acspace(%
+		\acroifT{foreign}{\acrowrite{foreign}, }%
+		\acrowrite{short}%
+		\acroifT{alt}{}%
+		\acrogroupcite
+		)%
+	}%
+	{\acrowrite{short}}%
 }
-\acsetup{only-used=false,list-long-format=\xcapitalisewords,list-style=myliststyle}
-\input{frontmatter/defined_acronyms}
+\NewAcroTemplate[list]{styleabbrev}{%
+	\normalsize
+	\AcroNeedPackage{array}%
+	\acronymsmapF{
+		\AcroAddRow{
+			\vspace{1.0ex}\par
+			\acrowrite{short} & \acrowrite{alt}
+			\acropagefill
+			\acropages
+			{\acrotranslate{page}\nobreakspace}
+			{\acrotranslate{pages}\nobreakspace}%
+			\tabularnewline
+			% 			\vspace{1.8ex}\par
+		}%
+	}
+	{\AcroRerun}%
+	%    \acroheading
+	\acropreamble
+	\par\noindent
+	\begin{tabular}{>{\bfseries}lp{.7\linewidth}}
+		\AcronymTable
+	\end{tabular}
+}
+
+\acsetup{
+	list/template  = styleabbrev,
+	%	list/display=used,
+	%	list/sort=true,
+	%	format=\RaggedRight
+}
+
+\usepackage[toc,section=section,nonumberlist]{glossaries-extra}
+\usepackage{glossary-superragged}
 \usepackage[intoc, english]{nomencl}
+\usepackage{tabularx, booktabs}
+\usepackage{calc}
+
+\newlength{\mycolwidth}
+
+%\newglossarystyle{mystyle}{
+	%	\setglossarystyle{treegroup}%
+	%	\renewcommand*{\glossentry}[2]{%
+		%		\glsentryitem{##1}%
+		%		\settowidth{\mycolwidth}{{\textsc{\mdseries\glossentryname{##1}} }}%
+		%		\begin{tabular}{@{} l p{\dimexpr\textwidth-\mycolwidth\relax} @{}}
+			%			{\textsc{\mdseries\glossentryname{##1}} }& \glossentrydesc{##1}\\
+			%		\end{tabular}%
+		%		\par\vspace{10pt}
+		%	}
+	%}
+\newglossarystyle{mystyle}{
+	\setglossarystyle{treegroup}%
+	\renewcommand*{\glossentry}[2]{%
+		\glsentryitem{##1}%
+		%		\settowidth{\mycolwidth}{{\textsc{\mdseries\glossentryname{##1}} }}%
+		{\textsc{\textbf{\glossentryname{##1}}}}
+		\glossentrydesc{##1}
+		\vspace{10pt}
+		
+	}
+}
+%\renewcommand{\glsnamefont}[1]{\textsc{\mdseries #1}}
+\setglossarystyle{mystyle}
 
 \renewcommand{\nomgroup}[1]{%
 	\ifthenelse{\equal{#1}{V}}{\item[{\rmfamily\scshape\Large Variables}]}{%
@@ -158,20 +246,21 @@
 
 
 % Mathematics
-\usepackage[cmex10]{amsmath}
+%\usepackage[cmex10]{amsmath}
 \usepackage{amssymb}
 \usepackage{cancel}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \newcommand{\T}{^\textrm{T}}
 \newcommand{\tr}{\textrm{tr}}
-\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
 \newcommand{\defeq}{\triangleq}
 
 % Tables
 \usepackage{placeins}
 \usepackage{array}
-\usepackage{booktabs,colortbl}
-\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{longtable}
+\usepackage{ltcaption}
+%\renewcommand\LTcaptype{figure}
 \usepackage{multirow}
 \newcommand{\mytable}{
 	\centering
@@ -196,6 +285,14 @@
 \setcounter{dbltopnumber}{2}
 
 % Descriptions
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} % To switch to Latin Modern
+\rmfamily % To load Latin Modern Roman and enable the following NFSS declarations.
+% Declare that Latin Modern Roman (lmr) should take
+% its bold (b) and bold extended (bx) weight, and small capital (sc) shape, 
+% from the corresponding Computer Modern Roman (cmr) font, for the T1 font encoding.
+\DeclareFontShape{T1}{lmr}{b}{sc}{<->ssub*cmr/bx/sc}{}
+\DeclareFontShape{T1}{lmr}{bx}{sc}{<->ssub*cmr/bx/sc}{}
 \setlist[description]{ 
 	labelwidth=0.6\textwidth,%
 	leftmargin=\labelwidth, 
@@ -204,17 +301,57 @@
 }
 \newcommand{\mydefinition}[2] {
 	\begin{flushright}
-		{\scshape\bfseries #1} #2 \\
+		\textbf{\textsc{#1}} #2 \\
 	\end{flushright}
 }
 
+\usepackage{makecell}
+\usepackage{mdframed}
+\newcommand{\defblock}[3]{
+	\begin{mdframed}[roundcorner=100pt]
+		\begin{tabular}{@{}lp{#3ex}@{}}
+			\textbf{\textsc{#1}}: & #2
+		\end{tabular}
+	\end{mdframed}
+}
+
+\usepackage{environ}
+\usepackage{tikz}
+\usetikzlibrary{fit,backgrounds,calc}
 % Pseudo-code
 \usepackage{algorithm}  % should go before \usepackage{hyperref}
+\NewEnviron{defbox}[3]
+{
+	%	\begin{tikzpicture}
+		%		\node[inner sep=0pt,
+		%		draw=cambrigeblue,
+		%		line width=1.2pt,
+		%		rounded corners=0.25cm] (box) {\parbox[t]{\textwidth}
+			%			{
+				\vspace{15pt}\\
+				\begin{tabular}{@{}lp{#3ex}@{}}
+					\RaggedLeft{\textbf{\textsc{#1}}:} & #2
+				\end{tabular}
+				\vspace{15pt}\\
+				%			}%
+			%		};
+		%		
+		%	\end{tikzpicture}
+}
+
 
 % Table of contents and hyperlinks
 \usepackage[linktocpage=true]{hyperref}
-\hypersetup{colorlinks=true,linktoc=all,linkcolor=.,filecolor=.,urlcolor=.,citecolor=.}
-\usepackage[nottoc,notlot,notlof]{tocbibind}
+%\hypersetup{colorlinks=true,linktoc=all,allcolors=gray!80!black}
+\hypersetup{
+	colorlinks=true,
+	linktoc=all,
+	linkcolor=black, 
+	filecolor=black, 
+	citecolor = gray!80!black,       
+	urlcolor=gray!80!black,
+}
+%\usepackage[nottoc,notlot,notlof]{tocbibind}
 \usepackage{blindtext}
 
 % Pseudo-code
@@ -230,14 +367,19 @@
 \makeatother
 
 % Bibliography
-\usepackage[square,numbers,compress,sort]{natbib}
-\bibliographystyle{IEEEtranN}
-\newcommand{\mycite}[1]{\citeauthor{#1}'s~\cite{#1}}
+%\usepackage[square,numbers,compress,sort]{natbib}
+%\bibliographystyle{IEEEtranN}
+\usepackage[round]{natbib}
+%\bibliographystyle{apalike}
+%\usepackage{cite}
+\usepackage{bibentry}
+\nobibliography*
+%\newcommand{\mycite}[1]{\citeauthor{#1}'s~\cite{#1}}
 
 % Header and footer
 \newcommand{\listheaderfont}{\scshape}
-\renewcommand{\tocetcmark}[1]{
-	\markboth{\listheaderfont #1}{\listheaderfont #1}}
+%\renewcommand{\tocetcmark}[1]{
+	%	\markboth{\listheaderfont #1}{\listheaderfont #1}}
 \usepackage{fancyhdr}
 \usepackage{extramarks}
 \pagestyle{fancy}
@@ -256,6 +398,22 @@
 	%	\fancyfoot[C]{\thepage}
 }
 
+\newcommand{\mysubsubsection}[2]{
+	%	\sectionmark{#2}
+	\let\orisubsubsectionmark\subsubsectionmark
+	\renewcommand\subsubsectionmark[1]{}%
+	\subsubsection[#1]{#2 \orisubsubsectionmark{#2}}
+	\orisubsubsectionmark{#2}
+	\let\subsubsectionmark\orisubsubsectionmark
+}
+\newcommand{\mysubsection}[2]{
+	%	\sectionmark{#2}
+	\let\orisubsectionmark\subsectionmark
+	\renewcommand\subsectionmark[1]{}%
+	\subsection[#1]{#2 \orisubsectionmark{#2}}
+	\orisubsectionmark{#2}
+	\let\subsectionmark\orisubsectionmark
+}
 \newcommand{\mysection}[2]{
 	%	\sectionmark{#2}
 	\let\orisectionmark\sectionmark
@@ -264,9 +422,12 @@
 	\orisectionmark{#2}
 	\let\sectionmark\orisectionmark
 }
-\newcommand{\mychapter}[2]{
+\newcommand{\mychapter}[3]{
 	%	\sectionmark{#2}
-	\chapter[#1]{#2 \chaptermark{#2}}
+	\chapter[#1]{#2 \chaptermark{#2}}\vspace{-15pt}\begin{center}
+		{\Large\scshape #3} 
+	\end{center} 
+	\vspace{10pt}
 }
 
 % Miscellaneous
@@ -282,3 +443,115 @@
 \definecolor{rulecolor}{HTML}{DCDCDC}
 \definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
 \newcommand{\change}[1]{\textcolor{othercolor}{#1}}
+
+\usepackage{pifont}
+\usepackage{xcolor}
+\definecolor{mycolor}{HTML}{008000}%{FF6600}
+\definecolor{indiagreen}{HTML}{138808}%{FF6600}
+\definecolor{papaya}{HTML}{EE892F}%{FF6600}
+\definecolor{mygreen}{HTML}{008000}%{FF6600}
+\definecolor{mypurple}{HTML}{9966CC}%{FF6600}
+\definecolor{cambrigeblue}{HTML}{A3C1AD}%{FF6600}
+\definecolor{darkgreen}{HTML}{014421}
+\definecolor{lightgreen}{HTML}{8FBC8F}
+
+
+\NewEnviron{publicationinfo}[1]
+{
+	\begin{tikzpicture}
+		\node[inner sep=0pt,
+		draw=black!50!white,
+		line width=2.5pt,
+		fill=black!10!white,
+		%		rounded corners=0.25cm
+		] (box) {\parbox[t]{\textwidth}
+			{
+				\begin{center}
+					\begin{minipage}{0.9\textwidth}
+						%					\vskip 10pt
+						%					\textbf{#1}\par\smallskip
+						{\BODY}
+						\par\smallskip
+					\end{minipage}\hfill
+				\end{center}
+			}%
+		};
+		\par
+	\end{tikzpicture}
+}
+
+\NewEnviron{researchquestions}[1]
+{
+	\begin{tikzpicture}
+		\node[inner sep=0pt,
+		draw=black!50!white,
+		line width=1.0pt,
+		fill=black!10!white,
+		%		rounded corners=0.25cm
+		] (box) {\parbox[t]{\textwidth}
+			{
+				\begin{center}
+					\begin{minipage}{0.9\textwidth}
+						%					\vskip 10pt
+						%					\textbf{#1}\par\smallskip
+						{\BODY}
+						\par\smallskip
+					\end{minipage}\hfill
+				\end{center}
+			}%
+		};
+		\par
+	\end{tikzpicture}
+}
+
+\NewEnviron{contributionninfo}[1]
+{
+	\begin{tikzpicture}
+		\node[inner sep=0pt,
+		draw=darkgreen!50!white,
+		line width=2.5pt,
+		fill=darkgreen!20!white,
+		%		rounded corners=0.25cm
+		] (box) {\parbox[t]{\textwidth}
+			{
+				\begin{center}
+					\begin{minipage}{0.9\textwidth}
+						%					\vskip 10pt
+						%					\textbf{#1}\par\smallskip
+						{\BODY}
+						\par\smallskip
+					\end{minipage}\hfill
+				\end{center}
+			}%
+		};
+		\par
+	\end{tikzpicture}
+}
+
+\usepackage{tipa}
+\usepackage{combelow}
+
+%{\scshape \chaptertitlename\ \thechapter}{3pt}{\titlerule\vspace{1.5ex} \scshape \Huge \centering}[\vspace{1.5ex}\titlerule]
+
+\newcommand{\divider}[1]{
+	\newpage
+	\vspace*{\fill}
+	\titlerule\vspace{5ex}
+	\begin{spacing}{2.5}
+		\begin{center}
+			{\Huge\scshape #1}
+		\end{center}
+	\end{spacing}
+	\thispagestyle{empty}
+	\vspace{1ex}
+	\titlerule
+	\vspace*{\fill}
+	\addtocounter{page}{-1}
+}
+
+\usepackage{cleveref}
+\crefname{figure}{Figures}{Figures}
+\Crefname{figure}{Figures}{Figures}
+%\usepackage{natbib}
+%\bibliographystyle{apalikefull}
+%\usepackage{apalike}

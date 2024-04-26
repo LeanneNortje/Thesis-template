@@ -1,24 +1,36 @@
-%\chapter*{Nomenclature\markboth{}{Nomenclature}}
-%\addcontentsline{toc}{chapter}{Nomenclature}
+\chapter*{Nomenclature\markboth{}{Nomenclature}}
+\addcontentsline{toc}{chapter}{Nomenclature}
 
 % \vspace*{-3mm}
-%\subsubsection*{Variables and functions}
+\section*{Variables and functions}
 \markboth{}{\scshape \nomname}
 \setlength{\nomlabelwidth}{3cm}
 \printnomenclature
 
-%\begingroup
-%\renewcommand{\arraystretch}{1.2}
-%\renewcommand{\tabularxcolumn}[1]{p{#1}}
-%\begin{tabularx}{\textwidth}{@{}p{2.5cm}L}
-%    $p(x)$ & Probability density function with respect to variable $x$.\\
-%\end{tabularx}
-%\endgroup
-
-
+%\addcontentsline{toc}{section}{Variables}
+%\nomenclature[v]{$K$}{The amount examples per class in the few-shot learning setting.}
+%\nomenclature[v]{\supportSet}{The set of given examples per class from which the model should learn new classes.}
+%\nomenclature[v]{$L$}{The number of classes that should be learned in the few-shot learning setting.}
+%\nomenclature[v]{\querySet}{The set of queries that has to be classified by the few-shot model.}
+%\nomenclature[v]{\matchingSet}{The set of images from which the model should choose an image that matches a spoken word query.}
 \newpage
 \section*{Acronyms and Abbreviations}
+\addcontentsline{toc}{section}{Acronyms and abbreviations}
 
-\printacronyms[heading=none]
+\printacronyms[display=used]
+
+\glsaddall
+\newpage
+\renewcommand\glossaryname{Definitions}
+\printnoidxglossaries
+
+%\newglossarystyle{mystyle}{%
+	%%	\setglossarystyle{treegroup}%
+	%	\renewcommand*{\glossentry}[2]{%
+		%		\glsentryitem{##1}%\textit{\glstarget{##1}{\glossentryname{##1}}}\par
+		%	}%
+	%}
+%
+%\setglossarystyle{mystyle}
 
 \newpage

@@ -1,0 +1,56 @@
+%% This is file `stb-bib.sty',
+%%
+%% Copyright (C) 2023 Stellenbosch University
+%% All rights reserved.
+%%
+%% -------------------------------------------------------------------
+%% Stellenbosch University BibTeX style file
+%% -------------------------------------------------------------------
+%% 
+%% Author:     Danie Els
+%% Maintained: Danie Els (dnjels@sun.ac.za)
+%% 
+%% This work may be distributed and modified, and must be credited
+%% under the conditions of the latest version of the Creative Commons
+%% License (CC BY 4.0). The latest version of this license is in:
+%% 
+%%    https://creativecommons.org/licenses/by/4.0/
+%% 
+%% -------------------------------------------------------------------
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{stb-bib}[2023/01/16 1.0 (DNJ Els)]
+\RequirePackageWithOptions{natbib}
+
+\@ifundefined{AorE}{%
+    \edef\AFRstr{\string afrikaans}%
+    \DeclareRobustCommand{\AorE}[2]{%
+        \ifx\AFRstr\languagename #1\else #2\fi}}{}
+
+\newcommand*\InBibliographyTemp{thebibliography}%
+\newcommand*\InBibliography{%
+    \ifx\InBibliographyTemp\@currenvir\relax
+        \expandafter\@firstoftwo
+    \else
+        \expandafter\@secondoftwo
+    \fi}
+
+\newcommand\BIBand{\AorE{en}{and}}
+
+\@namedef{bibstyle@stb-bib-eng-a}{%
+    \bibpunct{(}{)}{;}{a}{,}{,}%
+    \gdef\BIBand{\InBibliography%
+        {\AorE{en}{and}}%
+        {\AorE{en}{and}}}}
+
+\@namedef{bibstyle@stb-bib-eng-n}{%
+    \bibpunct{[}{]}{;}{n}{,}{,}%
+    \gdef\BIBand{\InBibliography%
+        {\AorE{en}{and}}%
+        {\AorE{en}{and}}}}
+
+\newcommand{\citenamefont}[1]{#1}
+\newcommand{\bibnamefont}[1]{#1}
+\newcommand{\bibfnamefont}[1]{#1}
+
+\endinput

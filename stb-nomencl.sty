@@ -1,0 +1,79 @@
+%%
+%% This is file `stb-nomencl.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% stb-nomencl.dtx  (with options: `pkg')
+%% Copyright (C) 2023 Stellenbosch University
+%% All rights reserved.
+%% 
+%% -------------------------------------------------------------------
+%% Stellenbosch University Nomenclature for Theses and Reports
+%% -------------------------------------------------------------------
+%% 
+%% Author:     Danie Els
+%% Maintained: Danie Els (dnjels@sun.ac.za)
+%% 
+%% This work may be distributed and modified, and must be credited
+%% under the conditions of the latest version of the Creative Commons
+%% License (CC BY 4.0). The latest version of this license is in:
+%% 
+%%    https://creativecommons.org/licenses/by/4.0/
+%% 
+%% This package consists of the files:
+%%     stb-nomencl.dtx
+%%     stb-nomencl.ins
+%% and the derived files:
+%%     stb-nomencl.sty
+%% -------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{stb-nomencl}[2023/07/25
+                              v1.1
+                              Stellenbosch Thesis Nomenclature (DNJ ELS)]
+\RequirePackage{calc}
+\newlength{\STBN@tdima}
+\newlength{\STBN@NomGrpSep}
+\newlength{\NomGrpSep}
+\newlength{\NomItmSep}
+\newlength{\NomItmMrg}
+\newlength{\NomLblSep}
+\setlength{\NomGrpSep}{\baselineskip}
+\setlength{\NomItmSep}{\smallskipamount}
+\setlength{\NomItmMrg}{1em}
+\setlength{\NomLblSep}{1em}
+\newcommand{\NomGrpLabel}[1]{\textbf{#1}}
+\setlength{\STBN@NomGrpSep}{0pt}
+\newcommand\NomGroup[1]{%<-Group Headings
+   \vspace{\STBN@NomGrpSep}%
+   \setlength{\STBN@NomGrpSep}{\NomGrpSep}%
+   \item[\hspace*{-\NomItmMrg}\NomGrpLabel{#1}]}
+\newcommand{\NomLabel}[1]{#1\hfil}
+\newenvironment{Nomencl}[1][2em]%<- Nomenclature list environment
+   {\list{}{%
+      \setlength{\labelwidth}{#1}%
+      \setlength{\labelsep}{\NomLblSep}%
+      \setlength{\itemindent}{0pt}%
+      \setlength{\leftmargin}{\labelwidth+\labelsep-\itemindent+\NomItmMrg}%
+      \setlength{\listparindent}{\parindent}%
+      \setlength{\itemsep}{\NomItmSep}%
+      \setlength{\parsep}{\parskip}%
+      \let\makelabel\NomLabel}}%
+  {\endlist}
+\newcommand*{\UnitLabel}[1]{~[\,\ensuremath{\mathrm{#1}}\,]}
+\newlength{\UnitLabelWdth}
+\setlength{\UnitLabelWdth}{2cm}
+\newcommand{\UnitLine}[3][\UnitLabelWdth]{{%
+    \setlength{\STBN@tdima}{#1}%
+    \rightskip\STBN@tdima\relax
+    \parfillskip -\rightskip
+    \leavevmode
+    {#2}\nobreak
+    \leaders\hbox{$\m@th\mkern \@dotsep mu\hbox{\tiny.}\mkern \@dotsep mu$}%
+    \hfill
+    \nobreak
+    \makebox[\STBN@tdima][l]{\UnitLabel{#3}}%
+}}
+\endinput
+%%
+%% End of file `stb-nomencl.sty'.

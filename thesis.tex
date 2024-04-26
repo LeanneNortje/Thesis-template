@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{report}
+\documentclass[a4paper,12pt, PhD]{stb-thesis}
 
 \include{imports}
 
@@ -21,18 +21,24 @@
 \newcommand{\lntodo}[1]{\todo[color=leannecolor]{Leanne: #1}}
 
 % Name 
-\newcommand{\ThesisTitle}{Some thesis title}
-\newcommand{\Author}{Name Surname}
+\title{Some thesis title}
+\author{Name Surname}{Name Surname}
 \newcommand{\Studentnumber}{12345678}
-\newcommand{\Supervisor}{Dr Name Surname}
-\newcommand{\Department}{Department of Electrical and Electronic Engineering}
-\newcommand{\Date}{September 2020}
-\newcommand{\SignedDate}{4 September 2020}
+\faculty{Faculty of Engineering}
+\degree{PhD (Electronic Engineering)}{Doctor of Philosophy (Electronic Engineering)}
+\supervisor[c]{Prof.\ Name Surname}
+
+\input{frontmatter/defined_acronyms}
+\input{frontmatter/definitions}
+
+%\newcommand{\Date}{September 2020}
+%\newcommand{\SignedDate}{4 September 2020}
 
 \begin{document}
 
 % Front matter
 \input{frontmatter/title_page}
+\input{frontmatter/dedication}
 %\afterpage{\blankpage}
 \pagenumbering{roman}
 \input{frontmatter/acknowledgements}
